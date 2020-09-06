@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>ECMAScript Practice Geoffrey</title>
+    </head>
+    <body>
+        <h1>Cost Calculator</h1>
+        <p>Add a cost:</p>
+        <form>
+            <p>
+                <label>Cost Name: </label>
+                <input type="text" id="txtCost" name="txtCost" size="25">
+            </p>
+            <p>
+                <label>Amount: </label>
+                <input type="text" id="txtAmount" name="txtAmount" size="25">
+            </p>
+
+            <p>Cost Type:</p>
+            <input type="radio" id="Daily" name="type" value="Daily">
+            <label for="Daily">Daily</label><br>
+            <input type="radio" id="Weekly" name="type" value="Weekly">
+            <label for="Weekly">Weekly</label><br>
+            <input type="radio" id="Monthly" name="type" value="Monthly">
+            <label for="Monthly">Monthly</label>
+            
+            <p>
+                <input type="button" value="Add Cost" onclick="calculate()" />
+            </p>
+        </form>
+
+
+        <div id="divOutput"></div>
+        <div id="totals"> </div>
+        <script src="app.js"></script>
+    </body>
+</html>
