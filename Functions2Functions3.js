@@ -1,9 +1,9 @@
-// Things that changed from first version:
-// Objects are created in a destructuring way. (maybe not efficient this way but good for learning.)
-// Functions are changed into function expressions.
-// Function Expression cookiesEnabled returns another function
-// Simple IIFE test example added that states current version of the code
-// Can't implement optional parameters as I dont use any currently. Seems simple enough anyway.
+// Things that changed from second version:
+// Changed IIFE function to an arrow IIFE function
+// Already using arrow functions for .foreach and .filter
+// Added template literals to all my sting concatonations
+// Already using spread syntax to add to the costspan array in Calculate function
+// Dont use parameters so the default values isnt something I can use. but its easy anyway
 
 // Destructuring Array
 const times = [  {span:"Daily", days:1},
@@ -27,12 +27,12 @@ var displayCost = function () {
     // Order them by daily weekly monthly in the output
     // For each type of bill
     costSpan.forEach(type => {
-        output += "Current " + type.span + " costs are: <br/>"
+        output += `Current   ${type.span}  costs are: <br/>`;
         // Filter to Daily / Monthly / Weekly from costs
         arrayFilter = costs.filter(object => type.span == object.span.span)
         // build string for each in filtered array
         arrayFilter.forEach(cost => {
-            output += cost.name + " " + cost.amount + "€ <br/>";
+            output += `${cost.name} ${cost.amount} € <br/>`;
         })
 
     });
@@ -69,7 +69,7 @@ var fullMonthCosts = function (){
             total += element.amount;
         }
     });
-    document.getElementById("totals").innerHTML = "The total costs(based on 30.45 days per month) per month is: " + total.toFixed(2) + "€";
+    document.getElementById("totals").innerHTML = `The total costs(based on 30.45 days per month) per month is: ${total.toFixed(2)}€`;
 };
 
 // Checks if the browser has cookies enabled and return a function that can print the result
@@ -86,23 +86,12 @@ var cookiesEnabled = function () {
     }
 };
 
-// Simple IIFE test function
-(function (version) {
-    document.getElementById("remark").innerHTML = version + " - Geoffrey";
-})("Version 2 (Objects 2 + Functions 1)");
 
-
-
+// IIFE Arrow function
+((version) => document.getElementById("remark").innerHTML = ` ${version} +  - Geoffrey`)( "Version 3 (Functions 2 + Functions 3)");
 
 // Calling both functions cookiesEnabled and return function
 cookiesEnabled()();
 displayCost();
 fullMonthCosts();
 
-/* Current included features:
-.forEach
-const
-let
-.filter
-arrow functions
-*/
