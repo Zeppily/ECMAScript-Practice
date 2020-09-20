@@ -1,81 +1,88 @@
-const costSpan = [  {span:"Daily", days:1},
-                    {span:"Weekly", days:7},
-                    {span:"Monthly", days:30.45},
-                ];
+//import
+import { Cost, Cycle } from "./classes.js";
 
-const costs = [ {name:"Rent", amount:270.25, span:costSpan[2]},
-                {name:"Food", amount:7.50, span:costSpan[0]},
-              ];
+// Global Variables
+const costList = new Cycle();
 
-// Output the lists in orderd fashion to the html page
-function displayCost() {
-    let output = "";
-    let arrayFilter = [];
-    // Order them by daily weekly monthly in the output
-    // For each type of bill
-    costSpan.forEach(type => {
-        output += "Current " + type.span + " costs are: <br/>"
-        // Filter to Daily / Monthly / Weekly from costs
-        arrayFilter = costs.filter(object => type.span == object.span.span)
-        // build string for each in filtered array
-        arrayFilter.forEach(cost => {
-            output += cost.name + " " + cost.amount + "€ <br/>";
-        })
+// Function Invoked by HTML when button is pressed with js hook;
+document.getElementById("test").onclick = function () {
+  let name = document.getElementById("txtCost").value;
+  let amount = document.getElementById("txtAmount").value;
+  let type = document.querySelector('input[name="type"]:checked').value;
+  AmountCheck(amount)(name, type);
+};
 
-    });
-    document.getElementById("divOutput").innerHTML = output;
-}
-// submitting the value to the lists
-function calculate() {
-    // retreiving values from HTML
-    let name = document.getElementById("txtCost").value;
-    let amount = document.getElementById("txtAmount").value;
-    let type = document.querySelector('input[name="type"]:checked').value;
-    // createobject for costs
-    let temp = {
-        name: name,
-        amount: parseFloat(amount)
+// IIFE To create 2 starting costs
+(function () {
+  costList.addCost(new Cost("Rent", 270.25, "Monthly"));
+  costList.addCost(new Cost("Food", 7.50, "Daily"));
+})();
+
+// Function that returns a function
+const AmountCheck = function (amountString = NaN) {
+  //Convert Amount to double
+  let amountNumber = parseFloat(amountString);
+  //falsy check, NaN skips if statement
+  if (amountNumber) {
+    return function (name, type) {
+      let cost = new Cost(name, amountNumber, type);
+      costList.addCost(cost);
+      console.log("The Cost was succesfully added!")
     };
-    // Find costType in CostSpan and add to object before appending
-    let object = costSpan.find(element => element.span == type); 
-    temp = {...temp, span: object};
-    costs.push(temp);
-    displayCost();
-    fullMonthCosts();
+  } else {
+      return function (name, _){
+          console.log(`the amount for the cost with name "${name}" you have entered was not a number and has not been entered!`);
+      }
+  }
+};
+
+// Show Daily costs (JS HOOK)
+document.getElementById("showDaily").onclick = function (){
+    console.log(arrayToString(costList.dailyCosts()));
 }
 
-// calculate cost totals per month average and output them to the html
-function fullMonthCosts(){
-    let total = 0;
-    costs.forEach(element => {
-        if (element.span.span == "Daily"){
-            total += (element.amount * 30.45);
-        }else if (element.span.span == "Weekly"){
-            total += (element.amount * (30.45/7));
-        }else {
-            total += element.amount;
-        }
-    });
-
-    document.getElementById("totals").innerHTML = "The total costs(based on 30.45 days per month) per month is: " + total.toFixed(2) + "€";
-
-
+// Show Weekly costs (JS HOOK)
+document.getElementById("showWeekly").onclick = function (){
+    console.log(arrayToString(costList.weeklyCosts()));
 }
 
+// Show Monthly costs (JS HOOK)
+document.getElementById("showMonthly").onclick = function (){
+    console.log(arrayToString(costList.monthlyCosts()));
+}
 
+// Show Total Cost (JS HOOK)
+document.getElementById("showAllCosts").onclick = function (){
+    console.log(costList.totalCost());
+}
 
+// Converts inputed arrays to string objects with forEach
+const arrayToString = (array) => {
+    let result = "";
+    array.forEach(element => {
+        result += `Name: ${element.name}, Amount: ${element.amount}, Type: ${element.type} \n`;
+    })
+    return result;
+};
 
+/* Included Features
+ALL FEATURES ARE INCLUDED IN THIS AND PREVIOUS ITERATIONS OF THIS IN THE ./OLD FOLDER
+THIS IS A CLEANER VERSION OF THE EXERCISE without features that add no value.
 
-
-
-
-displayCost();
-fullMonthCosts();
-
-/* Current included features:
-.forEach
-const
-let
+In this final iteration:
+Const
+Let
+Arrow functions
+Classes
+Class Inheritance
+Imports/Exports
+Spread operator
+IIFE
+Falsy
+String Literals/ Template literals
+Function expressions
 .filter
-arrow functions
+.forEach
+.map
+Default values
 */

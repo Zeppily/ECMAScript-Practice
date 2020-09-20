@@ -4,9 +4,7 @@
         <title>ECMAScript Practice Geoffrey</title>
     </head>
     <body>
-        <div id="cookies"></div>
-        <div id="remark"></div>
-        <h1>Cost Calculator</h1>
+        <h1>Cost Calculator (CONSOLE APP, SEE THE CONSOLE FOR OUTPUTS)</h1>
         <p>Add a cost:</p>
         <form>
             <p>
@@ -27,15 +25,19 @@
             <label for="Monthly">Monthly</label>
             
             <p>
-                <input type="button" value="Add Cost" onclick="calculate()" />
+                <input id="test" type="button" value="Add Cost"  /><br /><br />
+                <input id="showDaily" type="button" value="Show Daily Costs"  />
+                <input id="showWeekly" type="button" value="Show Weekly Costs"  />
+                <input id="showMonthly" type="button" value="Show Monthly Costs"  /><br /><br />
+                <input id="showAllCosts" type="button" value="Show Total"  />
+                <p>Total cost is based on a monthly average of 30.45 days</p>
             </p>
         </form>
 
 
-        <div id="divOutput"></div>
-        <div id="totals"> </div>
+
         <!-- <script src="app.js"></script> -->
         <!-- <script src="Objects2Functions1.js"></script> -->
-        <script src="Functions2Functions3.js"></script>
+        <script src="app.js" type= "module"></script>
     </body>
 </html>
